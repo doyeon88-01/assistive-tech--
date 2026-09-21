@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shoulder Joint 단어시험</title>
+<style>
+body{font-family:Arial,'Noto Sans KR',sans-serif;background:#f7f7f7;margin:0;padding:28px;color:#222}.wrap{max-width:900px;margin:auto;background:#fff;padding:28px;border-radius:16px;box-shadow:0 3px 15px #0001}h1{text-align:center;margin:0 0 8px}.sub{text-align:center;color:#666;margin-bottom:25px}.q{border:1px solid #ddd;border-radius:12px;padding:18px;margin:14px 0}.tag{display:inline-block;background:#f0f0f0;padding:4px 8px;border-radius:6px;font-size:13px;margin-bottom:8px}.prompt{font-size:18px;font-weight:700;margin-bottom:12px}input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ccc;border-radius:8px;font-size:16px}.result{margin-top:20px;padding:16px;border-radius:10px;background:#f2f2f2;font-size:18px}.correct{color:#16733b}.wrong{color:#b42318}.btns{text-align:center;margin-top:22px}button{border:0;border-radius:9px;padding:12px 22px;margin:4px;font-size:16px;cursor:pointer}#check{background:#222;color:white}#reset{background:#e9e9e9}.answer{margin-top:8px;color:#777;font-size:14px;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Shoulder Joint 단어시험</h1>
+<div class="sub">사진에 나온 단어를 보고 영어 단어를 입력하세요.</div>
+<div id="quiz"></div>
+<div class="btns"><button id="check">채점하기</button><button id="reset">다시 풀기</button></div>
+<div id="result" class="result" style="display:none"></div>
+</div>
+<script>
+const qs=[
+['Movement','외전','abduction'],
+['Muscle','극상근','supraspinatus'],
+['Origin','극상와','supraspinatus fossa'],
+['Insertion','상완골 대결절','greater tubercle'],
+['Movement','외전','abduction'],
+['Muscle','삼각근','deltoid'],
+['Origin','쇄골, 견봉, 견갑극','clavicle, acromion, spine of scapula'],
+['Insertion','삼각근조면','deltoid tuberosity'],
+['Movement','내전','adduction'],
+['Muscle','광배근','latissimus dorsi'],
+['Origin','T7-L5, 흉요추근막, 장골능','T7-L5, thoracolumbar fascia, iliac crest'],
+['Insertion','상완골 결절사이구의 바닥','floor of intertubercular groove'],
+['Movement','내전','adduction'],
+['Muscle','대흉근','pectoralis major'],
+['Origin','쇄골, 흉골, 늑연골','clavicle, sternum, costal cartilages'],
+['Insertion','상완골 결절사이구의 가쪽입술','lateral lip of intertubercular groove']
+];
+const quiz=document.getElementById('quiz');
+qs.forEach((q,i)=>{quiz.innerHTML+=`<div class="q"><div class="tag">${q[0]}</div><div class="prompt">${i+1}. ${q[1]} → 영어로?</div><input id="a${i}" autocomplete="off"><div class="answer" id="r${i}">정답: ${q[2]}</div></div>`});
+function norm(s){return s.toLowerCase().replace(/[()]/g,'').replace(/\s+/g,' ').trim()}
+document.getElementById('check').onclick=()=>{let score=0;qs.forEach((q,i)=>{let ok=norm(document.getElementById('a'+i).value)===norm(q[2]);let r=document.getElementById('r'+i);r.style.display='block';r.className='answer '+(ok?'correct':'wrong');r.textContent=ok?'✓ 정답':'✗ 오답 — 정답: '+q[2];if(ok)score++});let box=document.getElementById('result');box.style.display='block';box.textContent=`점수: ${score} / ${qs.length}`;window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})};
+document.getElementById('reset').onclick=()=>location.reload();
+</script></body></html>
